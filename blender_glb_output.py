@@ -37,6 +37,8 @@ output_glb = output_path + "/texturedMesh.glb"
 
 
 #bpy.ops.wm.obj_import(filepath="C:/Users/parek/Desktop/SeniorDesign/RTABMAP/437desksetupdata/imageOuts/rgb/outputs/texturedMesh.obj", directory="C:/Users/parek/Desktop/SeniorDesign/RTABMAP/437desksetupdata/imageOuts/rgb/outputs")
+bpy.ops.object.select_all(action="SELECT")
+bpy.ops.object.delete(use_global=False, confirm=True)
 bpy.ops.wm.obj_import(filepath=input_obj, directory=input_path)
 bpy.ops.paint.texture_paint_toggle()
 bpy.ops.export_scene.gltf(filepath=output_glb)
