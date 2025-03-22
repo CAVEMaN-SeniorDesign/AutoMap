@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 # image_test = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test1/Photos_Color_1742071923706.56591796875000.png"
 # image_test = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test1/Photos_Color_1742071924862.66601562500000.png"
 
-path = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test1"
+# path = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test00"
+path = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test2/image_0670_bin_210_44.png"
 # path = "C:/Users/parek/Desktop/SeniorDesign/RTABMAP/437desksetupdata/imageOuts/rgb"
 
 isRGB = False
@@ -29,7 +30,7 @@ def RL_deconvolution(observed, psf, iterations):
         latent_est    = latent_est * error_est
     return latent_est
 
-var_store = np.zeros(len(os.listdir(path)))
+# var_store = np.zeros(len(os.listdir(path)))
 
 # for file in os.listdir(path):
     # os.rename(path + "/" + file, path + "/" + file.replace(".", ""))
@@ -39,38 +40,49 @@ var_store = np.zeros(len(os.listdir(path)))
 
 # print(laplace_variance(cv2.imread("C:/Users/parek/Desktop/SeniorDesign/RTABMAP/437desksetupdata/imageOuts/rgb/1742162471608267.png")))
 
-for index, file in enumerate(os.listdir(path)):
-    # print(file)
-    if(os.path.isdir(path + "/" + file)):
-        continue
-    image = cv2.imread(path + "/" + file)
-    try:
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        isRGB = True
-    except:
-        gray = image
+# for index, file in enumerate(os.listdir(path)):
+#     # print(file)
+#     if(os.path.isdir(path + "/" + file)):
+#         continue
+#     image = cv2.imread(path + "/" + file)
+#     try:
+#         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#         isRGB = True
+#     except:
+#         gray = image
     
-    # print(gray.dtype)
-    blurmetric = laplace_variance(gray)
-    # print(blurmetric)
-    # if blurmetric > 200:
-        # plt.figure()
-        # if isRGB:
-        #     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-        # else:
-        #     plt.imshow(gray)
-        # print(file)
-    var_store[index] = blurmetric
+#     # print(gray.dtype)
+#     # blurmetric = laplace_variance(gray)
+    
+#     # print(blurmetric)
+#     # if blurmetric > 200:
+#         # plt.figure()
+#         # if isRGB:
+#         #     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+#         # else:
+#         #     plt.imshow(gray)
+#         # print(file)
+#     # var_store[index] = blurmetric
 
-print(np.median(var_store))
-print(np.average(var_store))
-
+image = cv2.imread(path)
+kernel_size = 7
+kernMB = np.zeros((kernel_size,kernel_size))
+kernMB[int((kernel_size-1)/2), :] = np.ones(kernel_size)
+kernMB /= kernel_size
+new_img = RL_deconvolution(image, kernMB, 50)
+new_img = cv2.normalize(new_img, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
 plt.figure()
-plt.hist(var_store, bins=50, color='red')
-plt.xlabel("Value")
-plt.ylabel("Freq")
+plt.imshow(cv2.cvtColor(new_img, cv2.COLOR_BGR2RGB))
+plt.waitforbuttonpress()
+# print(np.median(var_store))
+# print(np.average(var_store))
 
-plt.show()
+# plt.figure()
+# plt.hist(var_store, bins=50, color='red')
+# plt.xlabel("Value")
+# plt.ylabel("Freq")
+
+# plt.show()
 
 # for image in list_images:
 #     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
