@@ -20,6 +20,10 @@ else
     echo "invalid output file path"
 fi
 
+# TODO: Create and Source the Python 3.11 Venv
+# python -m venv .venv
+
+
 python remove_dupes.py $1 $2
 ./meshroom_image_to_map.sh "$2/img_mod" "$2/maps"
 blender -b -P blender_glb_output.py -- "$2/maps" "$2/maps"
