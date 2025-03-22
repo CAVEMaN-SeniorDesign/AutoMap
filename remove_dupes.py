@@ -1,8 +1,10 @@
 from PIL import Image
+import sys
 import os
 import imagehash
 import cv2
 import numpy as np
+import shutil
 
 
 hashes_idx = dict()
@@ -11,7 +13,37 @@ hashes_to_imgs = dict()
 def laplace_variance(image):
     return cv2.Laplacian(image, cv2.CV_64F).var()
 
-directory = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test1"
+# directory = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test1"
+n = len(sys.argv)
+
+if n < 5:
+    print("Too few arguments")
+    exit()
+elif n > 7:
+    print("Too many arguments")
+    exit()
+
+input_path = sys.argv[5]
+output_path = sys.argv[6]
+
+if(not os.path.isdir(input_path) or not os.path.isdir(output_path)):
+    print("Check paths, ensure they are directories")
+    exit()
+
+input_path = input_path.replace("\\", "/")
+output_path = output_path.replace("\\", "/")
+    
+if input_path[-1] == "/":
+    input_path = input_path[:-1]
+
+if output_path[-1] == "/":
+    output_path = output_path[:-1]
+
+
+input_copied_over = output_path + "/copied_input_imgs"
+shutil.copytree(input_path, input_copied_over)
+directory = output_path + "/img_mod"
+shutil.copytree(input_path, directory)
 
 # Rename all files to be normally indexed
 for index, filename in enumerate(os.listdir(directory)):

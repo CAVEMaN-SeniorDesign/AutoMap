@@ -11,10 +11,10 @@ texture_found = False
 n = len(sys.argv)
 print(n)
 
-if n < 2:
+if n < 5:
     print("Too few arguments")
     exit()
-elif n > 10:
+elif n > 7:
     print("Too many arguments")
     exit()
 
