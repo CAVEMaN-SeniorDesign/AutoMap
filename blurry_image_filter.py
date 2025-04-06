@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # image_test = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test1/Photos_Color_1742071924862.66601562500000.png"
 
 # path = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test00"
-path = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test2/image_0670_bin_210_44.png"
+# path = "C:/Users/parek/Downloads/4th_Floor_Hallway_Measuring_Test1/4th_Floor_Hallway_Measuring_Test2/image_0670_bin_210_44.png"
 # path = "C:/Users/parek/Desktop/SeniorDesign/RTABMAP/437desksetupdata/imageOuts/rgb"
 
 isRGB = False
